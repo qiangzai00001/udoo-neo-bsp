@@ -1,8 +1,8 @@
 * Prepare the build environment
 
-To form a warm and cosy build environment you have to decide which board to start with.
+    To form a warm and cosy build environment you have to decide which board to start with.
 
-For UDOO Neo development 
+    For UDOO Neo development 
 
     $ MACHINE=udooneo DISTRO=fslc-framebuffer source setup-environment build
 
@@ -10,6 +10,14 @@ For UDOO Neo development
 
     $ bitbake udoo-image-qt5
 
-To build for another imamge, example
+    To build for another imamge, example
 
     $ bitbake udoo-image-full-cmdline
+    
+* Burning the image to the SD-Card
+    Please double check the device of your SD-Card. This can corrupt your installation
+
+    I do the following on my Linux box
+
+    $ umount /dev/sd<disk>?
+    $ bzcat /tmp/udoo-image-qt5-udooneo.wic.bz2 | sudo dd of=/dev/<disk> bs=32M
