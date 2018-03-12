@@ -1,0 +1,9 @@
+* Reference : http://freescale.github.io
+
+    The FSL Community BSP is a community driven project to provide and maintain a Board Support Package meta layer to be used with OpenEmbedded-Core and Poky.
+
+    It is composed by three main layers:
+
+    meta-freescale: provides the base BSP support and the board support for Freescale i.MX and QorIQ reference boards;
+    meta-freescale-3rdparty: provides support for 3rd party and partner boards;
+    meta-freescale-distro: provides images recipes, demo recipes, and packagegroups used to ease the development with Yocto Project.
