@@ -4,8 +4,12 @@ To form a warm and cosy build environment you have to decide which board to star
 
 For UDOO Neo development 
 
-$ MACHINE=udooneo DISTRO=fslc-framebuffer source setup-environment build
+    $ MACHINE=udooneo DISTRO=fslc-framebuffer source setup-environment build
 
 * Build the Qt5 image
 
-$ bitbake udoo-image-qt5
+    $ bitbake udoo-image-qt5
+
+To build for another imamge, example
+
+    $ bitbake udoo-image-full-cmdline
