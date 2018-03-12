@@ -7,4 +7,5 @@ For UDOO Neo development
 $ MACHINE=udooneo DISTRO=fslc-framebuffer source setup-environment build
 
 * Build the Qt5 image
+
 $ bitbake udoo-image-qt5
