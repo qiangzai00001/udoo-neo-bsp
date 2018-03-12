@@ -20,7 +20,6 @@ UDOO_TOOLS = " \
 "
 
 QT_TOOLS = " \
-    qtbase-fonts \
     qtbase-plugins \
     qtbase-tools \
     qtdeclarative \
