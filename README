@@ -1,1 +1,7 @@
-sources/base/README
+Prepare the build environment
+
+To form a warm and cosy build environment you have to decide which board to start with.
+
+For UDOO Neo development
+
+$ MACHINE=udooneo source ./setup-environment build
