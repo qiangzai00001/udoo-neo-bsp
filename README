@@ -15,6 +15,7 @@
     $ bitbake udoo-image-full-cmdline
     
 * Burning the image to the SD-Card
+
     Please double check the device of your SD-Card. This can corrupt your installation
 
     I do the following on my Linux box
