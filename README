@@ -28,3 +28,9 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
 
     $ umount /dev/sd<disk>?
     $ bzcat build/tmp/deploy/images/udooneo/udoo-image-qt5-udooneo.wic.bz2 | sudo dd of=/dev/<disk> bs=32M
+
+* Cross compile a Qt5 SDK to use in QtCreator
+
+    The recommended way to build a fully featured toolchain for your image is to use the populate_sdk target for building a toolchain installer
+
+    $ bitbake udoo-image-qt5 -c populate_sdk
