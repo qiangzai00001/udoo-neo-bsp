@@ -1,3 +1,8 @@
+HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
+* Download source yocto BSP
+
+    $ git clone https://gitlab.com/embedded-yocto/udoo-neo-bsp.git
+    
 * Prepare the build environment
 
     To form a warm and cosy build environment you have to decide which board to start with.
