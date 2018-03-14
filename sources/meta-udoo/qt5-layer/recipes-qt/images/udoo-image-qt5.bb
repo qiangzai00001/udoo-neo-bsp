@@ -20,7 +20,6 @@ UDOO_TOOLS = " \
 "
 
 QT_TOOLS = " \
-    qtbase-fonts \
     qtbase-plugins \
     qtbase-tools \
     qtdeclarative \
@@ -49,7 +48,6 @@ QT_TOOLS = " \
     qtlocation-qmlplugins \
     cinematicexperience \
     qt5-env \
-    qtserialbus \
 "
 
 GSTREAMER_TOOLS = " \
