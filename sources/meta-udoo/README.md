@@ -7,11 +7,11 @@ use with OpenEmbedded and/or Yocto Freescale's BSP layers.
 This layer depends on:
 
 URI: git://git.openembedded.org/openembedded-core
-branch: master
+branch: pyro
 revision: HEAD
 
-URI: git://git.yoctoproject.org/meta-fsl-arm
-branch: master
+URI: https://github.com/Freescale/meta-freescale.git
+branch: pyro
 revision: HEAD
 
 Images
@@ -102,6 +102,14 @@ sure that TFTP, NFS and PXE are enabled and that the MAC address and
 IP address of your target board are configured to allow access to these
 services.  See your server OS documentation for specifics.
 
+You will need to ensure that you are building the ```.tar.bz2``` image
+as part of your build.  Add the following to your local.conf, noting
+specifically the space after the first quote character:
+
+```
+IMAGE_FSTYPES += " .tar.bz2"
+```
+
 After your ```bitbake``` build completes, you need to copy the DTB file,
 kernel image and root filesystem tar archive to your server. You will need
 to select the actual filenames from your build directory based on your configuration.
@@ -152,7 +160,7 @@ In:    serial
 Out:   serial
 Err:   serial
 Net:   FEC0 [PRIME]
-Hit any key to stop autoboot:  0 
+Hit any key to stop autoboot:  0
 => setenv autoload no
 => setenv serverip 192.168.1.32
 => dhcp

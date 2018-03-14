@@ -7,10 +7,12 @@ DEPENDS += "change-file-endianess-native tcl-native"
 
 inherit deploy
 
-SRC_URI = "git://git.freescale.com/ppc/sdk/rcw.git;branch=sdk-v2.0.x"
-SRCREV = "3252b8cce8e5a214c8e652121ef9b9460663c65a"
+SRC_URI = "git://source.codeaurora.org/external/qoriq/qoriq-yocto-sdk/rcw;nobranch=1"
+SRCREV = "7bd43d920065171a8d805a3d02fa4c0b39885664"
 
 S = "${WORKDIR}/git"
+
+export PYTHON = "${USRBINPATH}/python2"
 
 EXTRA_OEMAKE = "BOARDS=${@d.getVar('MACHINE', True).replace('-64b','').replace('-32b','')} DESTDIR=${D}/boot/rcw/"
 

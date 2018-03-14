@@ -16,20 +16,14 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase"
-ALLOW_EMPTY_${PN} = "1"
-
-SRC_URI += "file://0001-qtimageformats.pro-Make-the-dependencies-determinist.patch"
 
 PACKAGECONFIG ?= "libtiff"
 # Currently we don't have recipe for libmng, but lock it anyway so qtimageformats stay deterministic even when libmng is introduced
-PACKAGECONFIG[jasper] = ",,jasper"
-PACKAGECONFIG[libmng] = ",,libmng"
-PACKAGECONFIG[libtiff] = ",,tiff"
-PACKAGECONFIG[libwebp] = ",,libwebp"
+PACKAGECONFIG[jasper] = ",CONFIG+=done_config_jasper,jasper"
+PACKAGECONFIG[libmng] = ",CONFIG+=done_config_libmng,libmng"
+PACKAGECONFIG[libtiff] = ",CONFIG+=done_config_libtiff,tiff"
+PACKAGECONFIG[libwebp] = ",CONFIG+=done_config_libwebp,libwebp"
 
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'libmng', 'CONFIG+=OE_LIBMNG_ENABLED', '', d)}"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'jasper', 'CONFIG+=OE_JASPER_ENABLED', '', d)}"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'libtiff', 'CONFIG+=OE_LIBTIFF_ENABLED', '', d)}"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'libwebp', 'CONFIG+=OE_LIBWEBP_ENABLED', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "11300c62aa021ef07f3e4de8bd875bfcbcbe2f7e"
+SRCREV = "cd2de115c6216ad747cf4803e65a4ce4af220795"

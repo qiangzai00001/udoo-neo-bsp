@@ -18,8 +18,8 @@ imx-lib                   --                      --                      --    
 imx-test                  --                      00.00.00                00.00.00                5.7                     5.7                     00.00.00
 imx-uuc                   0.5.1+git               0.5.1+git               0.5.1+git               0.5.1+git               0.5.1+git               0.5.1+git
 imx-vpu                   --                      --                      --                      5.4.35                  5.4.35                  --
-libfslcodec               --                      --                      --                      4.1.4                   4.1.4                   --
-libfslparser              --                      --                      --                      4.1.4                   4.1.4                   --
+libfslcodec               --                      --                      --                      4.1.6                   4.1.6                   --
+libfslparser              --                      --                      --                      4.1.6                   4.1.6                   --
 libfslvpuwrap             --                      --                      --                      1.0.68                  --                      --
 libmcc                    --                      --                      --                      --                      --                      1.05.1
 mqxboot                   --                      --                      --                      --                      --                      2.0.1

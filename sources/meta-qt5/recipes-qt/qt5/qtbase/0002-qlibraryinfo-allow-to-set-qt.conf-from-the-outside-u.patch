@@ -19,18 +19,20 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 4582001..ff65ef9 100644
+index 27fe10a..29ffcda 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -163,7 +163,10 @@ void QLibrarySettings::load()
- 
+@@ -164,7 +164,10 @@ void QLibrarySettings::load()
  QSettings *QLibraryInfoPrivate::findConfiguration()
  {
--    QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
-+    QByteArray config = getenv("QT_CONF_PATH");
+ #ifdef QT_BUILD_QMAKE
+-    QString qtconfig = qmake_libraryInfoFile();
++    QByteArray config = getenv("OE_QMAKE_QTCONF_PATH");
 +    QString qtconfig = QFile::decodeName(config);
 +    if(!QFile::exists(qtconfig))
-+        qtconfig = QStringLiteral(":/qt/etc/qt.conf");
++        qtconfig = qmake_libraryInfoFile();
      if (QFile::exists(qtconfig))
          return new QSettings(qtconfig, QSettings::IniFormat);
- #ifdef QT_BUILD_QMAKE
+ #else
+-- 
+2.9.3

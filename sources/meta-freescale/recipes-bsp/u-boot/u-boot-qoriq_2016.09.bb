@@ -18,10 +18,10 @@ DEPENDS_append_qoriq-arm64 = " change-file-endianess-native dtc-native tcl-nativ
 DEPENDS_append_qoriq-arm = " change-file-endianess-native dtc-native tcl-native"
 DEPENDS_append_qoriq-ppc = " boot-format-native"
 
-SRC_URI = "git://git.freescale.com/ppc/sdk/u-boot.git;nobranch=1 \
+SRC_URI = "git://source.codeaurora.org/external/qoriq/qoriq-yocto-sdk/u-boot;nobranch=1 \
     file://fix-build-error-under-gcc6.patch \
 "
-SRCREV = "199df35d12857a68d5c8ee999dbdd167c3888d62"
+SRCREV = "a06b20925c02ba3fa888a1f915ea7935084d8600"
 
 S = "${WORKDIR}/git"
 
@@ -35,19 +35,23 @@ python () {
     if "e5500-64b:" in arch or "e6500-64b:" in arch:
         if not "lib32" in ml:
             raise bb.parse.SkipPackage("Building the u-boot for this arch requires multilib to be enabled")
-        sys_multilib = 'powerpc' + d.getVar('TARGET_VENDOR', False) + 'mllib32-' + d.getVar('HOST_OS', False)
+        sys_multilib = d.getVar('TARGET_VENDOR') + 'mllib32-linux'
+        sys_original = d.getVar('TARGET_VENDOR') + '-' + d.getVar('TARGET_OS')
+        workdir = d.getVar('WORKDIR').replace(sys_original,sys_multilib)
         d.setVar('DEPENDS_append', ' lib32-gcc-cross-powerpc lib32-libgcc')
-        d.setVar('PATH_append', ':' + d.getVar('STAGING_BINDIR_NATIVE', False) + '/' + sys_multilib)
-        d.setVar('TOOLCHAIN_OPTIONS_append', '/../lib32-' + d.getVar("MACHINE", False))
-        d.setVar("WRAP_TARGET_PREFIX", sys_multilib + '-')
+        d.setVar('PATH_append', ':' + d.getVar('STAGING_BINDIR_NATIVE') + '/powerpc' + sys_multilib)
+        d.setVar('TOOLCHAIN_OPTIONS', '--sysroot=' + workdir + '/lib32-recipe-sysroot')
+        d.setVar("WRAP_TARGET_PREFIX", 'powerpc' + sys_multilib + '-')
     elif "fsl-lsch2-32b:" in arch:
         if not "lib64" in ml:
             raise bb.parse.SkipPackage("Building the u-boot for this arch requires multilib to be enabled")
-        sys_multilib = 'aarch64' + d.getVar('TARGET_VENDOR', False) + 'mllib64-linux'
+        sys_multilib = d.getVar('TARGET_VENDOR') + 'mllib64-linux'
+        sys_original = d.getVar('TARGET_VENDOR') + '-' + d.getVar('TARGET_OS')
+        workdir = d.getVar('WORKDIR').replace(sys_original,sys_multilib)
         d.setVar('DEPENDS_append', ' lib64-gcc-cross-aarch64 lib64-libgcc')
-        d.setVar('PATH_append', ':' + d.getVar('STAGING_BINDIR_NATIVE', False) + '/' + sys_multilib)
-        d.setVar('TOOLCHAIN_OPTIONS_append', '/../lib64-' + d.getVar("MACHINE", False))
-        d.setVar("WRAP_TARGET_PREFIX", sys_multilib + '-')
+        d.setVar('PATH_append', ':' + d.getVar('STAGING_BINDIR_NATIVE') + '/aarch64' + sys_multilib)
+        d.setVar('TOOLCHAIN_OPTIONS', '--sysroot=' + workdir + '/lib64-recipe-sysroot')
+        d.setVar("WRAP_TARGET_PREFIX", 'aarch64' + sys_multilib + '-')
 }
 
 WRAP_TARGET_PREFIX ?= "${TARGET_PREFIX}"

@@ -13,6 +13,10 @@ python () {
     d.setVarFlag("PACKAGECONFIG", "x11", x11flag.replace("--enable-glx-tls", "--enable-glx"))
 }
 
+# Enable Etnaviv support
+PACKAGECONFIG_append_use-mainline-bsp = " gallium"
+GALLIUMDRIVERS_append_use-mainline-bsp = ",etnaviv,imx"
+
 # FIXME: Dirty hack to allow use of Vivante GPU libGL binary
 do_install_append_imxgpu3d () {
     rm -f ${D}${libdir}/libGL.* \

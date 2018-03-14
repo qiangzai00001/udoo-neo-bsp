@@ -6,15 +6,33 @@ DEPENDS += "u-boot-mkimage-native dtc-native"
 
 inherit deploy
 
-SRC_URI = "git://git.freescale.com/ppc/sdk/ppa-generic.git;branch=sdk-v2.0.x"
-SRCREV = "cb683b7cab76f2d685f54393d3b51dd1d02dac9d"
+SRC_URI = "git://git.freescale.com/ppc/sdk/ppa-generic.git;nobranch=1"
+SRCREV = "9fcb080dd7415927aa3fbabfcba8982bcb1466d3"
 
 S = "${WORKDIR}/git"
 
-EXTRA_OEMAKE = "CC64="${CC}" LD64="${LD}"  OBJ64="${OBJCOPY}""
+python () {
+    ml = d.getVar("MULTILIB_VARIANTS", True)
+    arch = d.getVar("OVERRIDES", True)
+    if "fsl-lsch2-32b:" in arch:
+        if not "lib64" in ml:
+            raise bb.parse.SkipPackage("Building the u-boot for this arch requires multilib to be enabled")
+        sys_multilib = d.getVar('TARGET_VENDOR') + 'mllib64-linux'
+        sys_original = d.getVar('TARGET_VENDOR') + '-' + d.getVar('TARGET_OS')
+        workdir = d.getVar('WORKDIR').replace(sys_original,sys_multilib)
+        d.setVar('DEPENDS_append', ' lib64-gcc-cross-aarch64 lib64-libgcc')
+        d.setVar('PATH_append', ':' + d.getVar('STAGING_BINDIR_NATIVE') + '/aarch64' + sys_multilib)
+        d.setVar('TOOLCHAIN_OPTIONS', '--sysroot=' + workdir + '/lib64-recipe-sysroot')
+        d.setVar("WRAP_TARGET_PREFIX", 'aarch64' + sys_multilib + '-')
+}
+
+WRAP_TARGET_PREFIX ?= "${TARGET_PREFIX}"
+EXTRA_OEMAKE = 'CC64="${WRAP_TARGET_PREFIX}gcc ${TOOLCHAIN_OPTIONS}" LD64="${WRAP_TARGET_PREFIX}ld ${TOOLCHAIN_OPTIONS}"  OBJ64="${WRAP_TARGET_PREFIX}objcopy"'
 
 PPA_PATH ?= "ppa/soc-ls1043/platform-rdb"
 PPA_PATH_ls1046a = "ppa/soc-ls1046/platform-rdb"
+PPA_PATH_ls2088a = "ppa/soc-ls2088/platform-rdb"
+PPA_PATH_ls1012a = "ppa/soc-ls1012/platform-rdb"
 PPA_NAME ?= "ppa-${MACHINE}-${DATETIME}"
 PPA_NAME[vardepsexclude] = "DATETIME"
 
@@ -45,5 +63,5 @@ FILES_${PN}-image += "/boot"
 
 CLEANBROKEN = "1"
 PARALLEL_MAKE = ""
-COMPATIBLE_MACHINE = "(ls1043a|ls1046a)"
+COMPATIBLE_MACHINE = "(ls1043a|ls1046a|ls2088a|ls1012a)"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

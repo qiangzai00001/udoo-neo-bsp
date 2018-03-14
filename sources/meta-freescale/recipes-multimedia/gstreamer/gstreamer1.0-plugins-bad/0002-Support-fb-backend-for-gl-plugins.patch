@@ -1,7 +1,7 @@
-From 230873df6cfd43ce70d9dc763d6f47415f846059 Mon Sep 17 00:00:00 2001
+From d0179e89c294f775a7ebb6ccb0ad539433f3c22e Mon Sep 17 00:00:00 2001
 From: Haihua Hu <b55597@freescale.com>
 Date: Mon, 16 Nov 2015 17:41:57 +0800
-Subject: [PATCH] Support fb backend for gl plugins
+Subject: [PATCH 08/26] Support fb backend for gl plugins
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -9,9 +9,12 @@ Content-Transfer-Encoding: 8bit
 1.Add fb support in glimagesink
 2.override set_render_rectangle() to support resize
 
-Upstream-Status: Inappropriate [i.MX specific]
+Upstream-Status: Inappropriate [i.MX specific]
 
 Signed-off-by: Haihua Hu <b55597@freescale.com>
+
+Conflicts:
+	configure.ac
 ---
  configure.ac                            |  25 ++-
  gst-libs/gst/gl/Makefile.am             |   5 +
@@ -20,10 +23,10 @@ Signed-off-by: Haihua Hu <b55597@freescale.com>
  gst-libs/gst/gl/fb/gstgldisplay_fb.h    |  67 ++++++++
  gst-libs/gst/gl/fb/gstglwindow_fb_egl.c | 265 ++++++++++++++++++++++++++++++++
  gst-libs/gst/gl/fb/gstglwindow_fb_egl.h |  65 ++++++++
- gst-libs/gst/gl/gstgldisplay.c          |   8 +
+ gst-libs/gst/gl/gstgldisplay.c          |  11 ++
  gst-libs/gst/gl/gstgldisplay.h          |   1 +
- gst-libs/gst/gl/gstglwindow.c           |   5 +
- 10 files changed, 574 insertions(+), 1 deletion(-)
+ gst-libs/gst/gl/gstglwindow.c           |   8 +
+ 11 files changed, 580 insertions(+), 1 deletions(-)
  create mode 100644 gst-libs/gst/gl/fb/Makefile.am
  create mode 100644 gst-libs/gst/gl/fb/gstgldisplay_fb.c
  create mode 100644 gst-libs/gst/gl/fb/gstgldisplay_fb.h
@@ -31,28 +34,28 @@ Signed-off-by: Haihua Hu <b55597@freescale.com>
  create mode 100644 gst-libs/gst/gl/fb/gstglwindow_fb_egl.h
 
 diff --git a/configure.ac b/configure.ac
-index 8d82850..537ee33 100644
+index f135648..991e7d0 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -682,6 +682,7 @@ save_LIBS="$LIBS"
- HAVE_GL=no
+@@ -700,6 +700,7 @@ HAVE_GL=no
  HAVE_GLES2=no
+ HAVE_GLES3_H=no
  HAVE_WAYLAND_EGL=no
-+HAV_FB_EGL=no
++HAVE_FB_EGL=no
  
  HAVE_EGL_RPI=no
  
-@@ -718,6 +719,9 @@ case $host in
+@@ -737,6 +738,9 @@ case $host in
      old_LIBS=$LIBS
      old_CFLAGS=$CFLAGS
  
-+    dnl check for imx fbbackend support
++    dnl check fb backend for imx soc
 +    AC_CHECK_LIB(EGL, fbGetDisplay, HAVE_FB_EGL=yes, HAVE_FB_EGL=no)
 +
      dnl FIXME: Mali EGL depends on GLESv1 or GLESv2
      AC_CHECK_HEADER([EGL/fbdev_window.h],
        [
-@@ -1003,6 +1007,16 @@ case $host in
+@@ -1043,6 +1047,16 @@ case $host in
        fi
      fi
  
@@ -69,7 +72,7 @@ index 8d82850..537ee33 100644
      if test "x$HAVE_EGL_RPI" = "xyes"; then
        if test "x$NEED_DISPMANX" != "xno"; then
          HAVE_WINDOW_DISPMANX=yes
-@@ -1017,7 +1031,7 @@ case $host in
+@@ -1057,7 +1071,7 @@ case $host in
        fi
      else
        if test "x$NEED_EGL" != "xno"; then
@@ -78,7 +81,7 @@ index 8d82850..537ee33 100644
            GL_LIBS="$GL_LIBS -lEGL $EGL_LIBS"
            GL_CFLAGS="$GL_CFLAGS $EGL_CFLAGS"
            USE_EGL=yes
-@@ -1166,6 +1180,7 @@ GST_GL_HAVE_WINDOW_WAYLAND=0
+@@ -1209,6 +1223,7 @@ GST_GL_HAVE_WINDOW_WAYLAND=0
  GST_GL_HAVE_WINDOW_ANDROID=0
  GST_GL_HAVE_WINDOW_DISPMANX=0
  GST_GL_HAVE_WINDOW_EAGL=0
@@ -86,7 +89,7 @@ index 8d82850..537ee33 100644
  
  if test "x$HAVE_WINDOW_X11" = "xyes"; then
    GL_WINDOWS="x11 $GL_WINDOWS"
-@@ -1195,6 +1210,10 @@ if test "x$HAVE_WINDOW_EAGL" = "xyes"; then
+@@ -1238,6 +1253,10 @@ if test "x$HAVE_WINDOW_EAGL" = "xyes"; then
    GL_WINDOWS="eagl $GL_WINDOWS"
    GST_GL_HAVE_WINDOW_EAGL=1
  fi
@@ -97,7 +100,7 @@ index 8d82850..537ee33 100644
  
  GL_CONFIG_DEFINES="$GL_CONFIG_DEFINES
  #define GST_GL_HAVE_WINDOW_X11 $GST_GL_HAVE_WINDOW_X11
-@@ -1204,6 +1223,7 @@ GL_CONFIG_DEFINES="$GL_CONFIG_DEFINES
+@@ -1247,6 +1266,7 @@ GL_CONFIG_DEFINES="$GL_CONFIG_DEFINES
  #define GST_GL_HAVE_WINDOW_ANDROID $GST_GL_HAVE_WINDOW_ANDROID
  #define GST_GL_HAVE_WINDOW_DISPMANX $GST_GL_HAVE_WINDOW_DISPMANX
  #define GST_GL_HAVE_WINDOW_EAGL $GST_GL_HAVE_WINDOW_EAGL
@@ -105,7 +108,7 @@ index 8d82850..537ee33 100644
  "
  
  dnl PLATFORM's
-@@ -1279,6 +1299,7 @@ if test "x$GL_APIS" = "x" -o "x$GL_PLATFORMS" = "x" -o "x$GL_WINDOWS" = "x"; the
+@@ -1322,6 +1342,7 @@ if test "x$GL_APIS" = "x" -o "x$GL_PLATFORMS" = "x" -o "x$GL_WINDOWS" = "x"; the
    HAVE_WINDOW_ANDROID=no
    HAVE_WINDOW_COCOA=no
    HAVE_WINDOW_EAGL=no
@@ -113,7 +116,7 @@ index 8d82850..537ee33 100644
  fi
  
  AC_SUBST(GL_LIBS)
-@@ -1294,6 +1315,7 @@ AM_CONDITIONAL(HAVE_WINDOW_DISPMANX, test "x$HAVE_WINDOW_DISPMANX" = "xyes")
+@@ -1337,6 +1358,7 @@ AM_CONDITIONAL(HAVE_WINDOW_DISPMANX, test "x$HAVE_WINDOW_DISPMANX" = "xyes")
  AM_CONDITIONAL(HAVE_WINDOW_WAYLAND, test "x$HAVE_WINDOW_WAYLAND" = "xyes")
  AM_CONDITIONAL(HAVE_WINDOW_ANDROID, test "x$HAVE_WINDOW_ANDROID" = "xyes")
  AM_CONDITIONAL(HAVE_WINDOW_EAGL, test "x$HAVE_WINDOW_EAGL" = "xyes")
@@ -121,7 +124,7 @@ index 8d82850..537ee33 100644
  
  AM_CONDITIONAL(USE_OPENGL, test "x$USE_OPENGL" = "xyes")
  AM_CONDITIONAL(USE_GLES2, test "x$USE_GLES2" = "xyes")
-@@ -3580,6 +3602,7 @@ gst-libs/gst/gl/egl/Makefile
+@@ -3700,6 +3722,7 @@ gst-libs/gst/gl/egl/Makefile
  gst-libs/gst/gl/wayland/Makefile
  gst-libs/gst/gl/win32/Makefile
  gst-libs/gst/gl/x11/Makefile
@@ -130,10 +133,10 @@ index 8d82850..537ee33 100644
  gst-libs/gst/interfaces/Makefile
  gst-libs/gst/codecparsers/Makefile
 diff --git a/gst-libs/gst/gl/Makefile.am b/gst-libs/gst/gl/Makefile.am
-index f1cb9e1..4bd6511 100644
+index 5ceb622..01498e0 100644
 --- a/gst-libs/gst/gl/Makefile.am
 +++ b/gst-libs/gst/gl/Makefile.am
-@@ -117,6 +117,11 @@ SUBDIRS += eagl
+@@ -119,6 +119,11 @@ SUBDIRS += eagl
  libgstgl_@GST_API_VERSION@_la_LIBADD += eagl/libgstgl-eagl.la
  endif
  
@@ -707,10 +710,20 @@ index 0000000..216e421
 +
 +#endif /* __GST_GL_WINDOW_FB_EGL_H__ */
 diff --git a/gst-libs/gst/gl/gstgldisplay.c b/gst-libs/gst/gl/gstgldisplay.c
-index 5cae2f4..0213d60 100644
+index 3ffc906..7b0b5bf 100644
 --- a/gst-libs/gst/gl/gstgldisplay.c
 +++ b/gst-libs/gst/gl/gstgldisplay.c
-@@ -205,6 +205,14 @@ gst_gl_display_new (void)
+@@ -70,6 +70,9 @@
+ #include <gst/gl/egl/gsteglimage.h>
+ #include <gst/gl/egl/gstglmemoryegl.h>
+ #endif
++#if GST_GL_HAVE_WINDOW_FB
++#include <gst/gl/fb/gstgldisplay_fb.h>
++#endif
+ 
+ GST_DEBUG_CATEGORY_STATIC (gst_context);
+ GST_DEBUG_CATEGORY_STATIC (gst_gl_display_debug);
+@@ -207,6 +210,14 @@ gst_gl_display_new (void)
    if (!display && (!user_choice || g_strstr_len (user_choice, 7, "wayland")))
      display = GST_GL_DISPLAY (gst_gl_display_wayland_new (NULL));
  #endif
@@ -726,10 +739,10 @@ index 5cae2f4..0213d60 100644
    if (!display && (!platform_choice
            || g_strstr_len (platform_choice, 3, "egl")))
 diff --git a/gst-libs/gst/gl/gstgldisplay.h b/gst-libs/gst/gl/gstgldisplay.h
-index 7f49a44..c5bc985 100644
+index a02e904..2f896bb 100644
 --- a/gst-libs/gst/gl/gstgldisplay.h
 +++ b/gst-libs/gst/gl/gstgldisplay.h
-@@ -60,6 +60,7 @@ typedef enum
+@@ -61,6 +61,7 @@ typedef enum
    GST_GL_DISPLAY_TYPE_WIN32 = (1 << 3),
    GST_GL_DISPLAY_TYPE_DISPMANX = (1 << 4),
    GST_GL_DISPLAY_TYPE_EGL = (1 << 5),
@@ -738,10 +751,20 @@ index 7f49a44..c5bc985 100644
    GST_GL_DISPLAY_TYPE_ANY = G_MAXUINT32
  } GstGLDisplayType;
 diff --git a/gst-libs/gst/gl/gstglwindow.c b/gst-libs/gst/gl/gstglwindow.c
-index 695f4c4..7b20ff4 100644
+index 0588f1d..834d927 100644
 --- a/gst-libs/gst/gl/gstglwindow.c
 +++ b/gst-libs/gst/gl/gstglwindow.c
-@@ -302,6 +302,11 @@ gst_gl_window_new (GstGLDisplay * display)
+@@ -58,6 +58,9 @@
+ #if GST_GL_HAVE_WINDOW_EAGL
+ #include "eagl/gstglwindow_eagl.h"
+ #endif
++#if GST_GL_HAVE_WINDOW_FB
++#include "fb/gstglwindow_fb_egl.h"
++#endif
+ #if GST_GL_HAVE_WINDOW_DISPMANX
+ #include "dispmanx/gstglwindow_dispmanx_egl.h"
+ #endif
+@@ -308,6 +311,11 @@ gst_gl_window_new (GstGLDisplay * display)
    if (!window && (!user_choice || g_strstr_len (user_choice, 4, "eagl")))
      window = GST_GL_WINDOW (gst_gl_window_eagl_new (display));
  #endif

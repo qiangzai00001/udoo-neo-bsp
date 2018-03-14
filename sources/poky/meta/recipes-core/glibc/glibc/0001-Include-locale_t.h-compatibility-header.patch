@@ -9,7 +9,9 @@ these newer versions of glibc
 
 See f0be25b6336db7492e47d2e8e72eb8af53b5506d in glibc
 
-Upstream-Status: Inappropriate
+Upstream-Status: Inappropriate compatibility with newer host glibc
+Signed-off-by: Joshua Watt <JPEWhacker@gmail.com>
+
 ---
  locale/bits/types/locale_t.h | 1 +
  1 file changed, 1 insertion(+)

@@ -7,18 +7,18 @@ SECTION = "kernel"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-SRC_URI = "git://git.freescale.com/ppc/sdk/linux.git;nobranch=1 \
+SRC_URI = "git://source.codeaurora.org/external/qoriq/qoriq-yocto-sdk/linux;nobranch=1 \
     file://modify-defconfig-t1040-nr-cpus.patch \
     file://0003-use-static-inline-in-ARM-lifeboot.h.patch \
     file://fix-the-compile-issue-under-gcc6.patch \
     file://only-set-vmpic_msi_feature-if-CONFIG_EPAPR_PARAVIRT-.patch \
     file://powerpc-fsl-Fix-build-of-the-dtb-embedded-kernel-images.patch \
-    file://CVE-2016-5696-limiting-of-all-challenge.patch \
-    file://CVE-2016-5696-make-challenge-acks-less-predictable.patch \
     file://CVE-2016-2053.patch \
     file://CVE-2016-0758.patch \
+    file://powerpc-64e-Convert-cmpi-to-cmpwi-in-head_64.S.patch \
+    file://powerpc-vdso64-Use-double-word-compare-on-pointers.patch \
 "
-SRCREV = "4004071c129a776136e71f6a85383fea87f5db75"
+SRCREV = "1ae843c08261402b2c35d83422e4fa1e313611f4"
 
 S = "${WORKDIR}/git"
 
@@ -37,6 +37,7 @@ SCMVERSION ?= "y"
 LOCALVERSION = ""
 DELTA_KERNEL_DEFCONFIG ?= ""
 DELTA_KERNEL_DEFCONFIG_prepend_qoriq-arm64 = "freescale.config "
+DELTA_KERNEL_DEFCONFIG_prepend_fsl-lsch2-32b = "freescale_aarch32.config "
 
 do_merge_delta_config() {
     # copy desired defconfig so we pick it up for the real kernel_do_configure
