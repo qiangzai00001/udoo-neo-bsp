@@ -81,8 +81,9 @@ IMAGE_INSTALL = "\
     ${FSL_TOOLS} \
     cairo pango fontconfig freetype pulseaudio dbus \
     alsa-lib alsa-tools alsa-state fsl-alsa-plugins \
-    tslib \
 "
+
+IMAGE_INSTALL += "evtest tslib tslib-conf tslib-tests tslib-calibrate"
 
 inherit core-image
 
