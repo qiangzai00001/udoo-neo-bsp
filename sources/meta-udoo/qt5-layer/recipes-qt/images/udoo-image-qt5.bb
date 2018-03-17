@@ -47,6 +47,9 @@ QT_TOOLS = " \
     qtlocation-plugins \
     qtlocation-qmlplugins \
     cinematicexperience \
+    qt5everywheredemo \
+    qtsmarthome \
+    qt5ledscreen \
     qt5-env \
     qtserialbus \
 "
