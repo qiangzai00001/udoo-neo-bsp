@@ -34,3 +34,12 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
     The recommended way to build a fully featured toolchain for your image is to use the populate_sdk target for building a toolchain installer
 
     $ bitbake udoo-image-qt5 -c populate_sdk
+    
+    Grab a good book and wait until the task is finished.... After the builds has finished you can install the toolchain like this:
+    sudo tmp/deploy/sdk/fslc-framebuffer-glibc-x86_64-udoo-image-qt5-armv7at2hf-neon-toolchain-2.2.3.sh 
+    [sudo] password for user: 
+    FSLC FrameBuffer SDK installer version 2.2.3
+    ============================================
+    Enter target directory for SDK (default: /opt/fslc-framebuffer/2.2.3): 
+    You are about to install the SDK to "/opt/fslc-framebuffer/2.2.3". Proceed[Y/n]? 
+    Extracting SDK.............................................................................
