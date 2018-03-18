@@ -78,6 +78,14 @@ IMAGE_INSTALL = "\
     cairo pango fontconfig freetype pulseaudio dbus \
     alsa-lib alsa-tools alsa-state fsl-alsa-plugins \
 "
+IMAGE_INSTALL_append = "\
+    ttf-dejavu-sans \
+    ttf-dejavu-sans-mono \
+    ttf-dejavu-sans-condensed \
+    ttf-dejavu-serif \
+    ttf-dejavu-serif-condensed \
+    ttf-dejavu-common \
+"
 
 inherit core-image
 
