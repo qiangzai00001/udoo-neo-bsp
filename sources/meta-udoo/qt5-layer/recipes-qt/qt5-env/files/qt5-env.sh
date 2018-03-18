@@ -89,4 +89,4 @@ export PATH=${PATH}:/usr/bin/qt5
 # of an actual plugin. This indicates that no special integration is
 # necessary to use EGL with the framebuffer and so no plugins should
 # be loaded.
-
+export QT_QPA_FONTDIR=/usr/share/fonts/truetype
