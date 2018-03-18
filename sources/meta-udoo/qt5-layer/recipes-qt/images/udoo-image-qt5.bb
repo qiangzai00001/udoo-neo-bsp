@@ -85,6 +85,15 @@ IMAGE_INSTALL = "\
 
 IMAGE_INSTALL += "evtest tslib tslib-conf tslib-tests tslib-calibrate"
 
+IMAGE_INSTALL_append = "\
+    ttf-dejavu-sans \
+    ttf-dejavu-sans-mono \
+    ttf-dejavu-sans-condensed \
+    ttf-dejavu-serif \
+    ttf-dejavu-serif-condensed \
+    ttf-dejavu-common \
+"
+
 inherit core-image
 
 # for populate_sdk to create a valid toolchain
