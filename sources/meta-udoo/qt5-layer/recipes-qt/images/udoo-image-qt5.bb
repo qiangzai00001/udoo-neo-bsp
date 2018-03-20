@@ -23,7 +23,6 @@ QT_TOOLS = " \
     qtbase-plugins \
     qtbase-tools \
     qtdeclarative \
-    qtdeclarative-plugins \
     qtdeclarative-tools \
     qtdeclarative-qmlplugins \
     qtmultimedia \
@@ -50,10 +49,6 @@ QT_TOOLS = " \
     qt5-env \
 "
 
-GSTREAMER_TOOLS = " \
-    packagegroup-fsl-gstreamer1.0-full \
-"
-
 REMOTE_DEBUGGING = " \
     gdbserver \
     openssh-sftp-server \
@@ -72,11 +67,9 @@ IMAGE_INSTALL = "\
     ${CORE_IMAGE_EXTRA_INSTALL} \
     ${QT_TOOLS} \
     ${UDOO_TOOLS} \
-    ${GSTREAMER_TOOLS} \
     ${REMOTE_DEBUGGING} \
     ${FSL_TOOLS} \
     cairo pango fontconfig freetype pulseaudio dbus \
-    alsa-lib alsa-tools alsa-state fsl-alsa-plugins \
 "
 IMAGE_INSTALL_append = "\
     ttf-dejavu-sans \
