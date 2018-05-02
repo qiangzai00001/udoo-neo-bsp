@@ -93,6 +93,8 @@ IMAGE_INSTALL_append = "\
     ttf-dejavu-serif-condensed \
     ttf-dejavu-common \
 "
+#add compiler for udooneo
+IMAGE_INSTALL_append = " autoconf automake binutils binutils-symlinks cpp cpp-symlinks gcc gcc-symlinks g++ g++-symlinks gettext make libstdc++ libstdc++-dev file coreutils"
 
 inherit core-image
 
