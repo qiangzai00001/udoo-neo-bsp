@@ -27,12 +27,18 @@ SRC_URI = "${UDOOBOARD_GITHUB_MIRROR};branch=${SRCBRANCH} \
            file://0003-avoid-endless-loop.patch \
            file://0005-add-support-for-gcc6.patch \
            file://0006-Fixed-Ethernet-on-Seco-SBC-A62.patch \
+	         file://0007-enabled-uart-add-new-dtb.patch \
            file://defconfig \
 "
 SRC_URI_append_udooqdl = "file://0010-default-bpp-to-16.patch \
 "
 
 SRC_URI_append_udooneo = " \
+    ${@base_conditional("ENABLE_CAN_BUS", "1", "file://0001-Enable-FlexCAN-interfaces-for-UDOO-Neo.patch", "", d)} \
+    ${@base_conditional("ENABLE_SPI_BUS", "1", "file://0020-udooneo-enable-ecspi2.patch", "", d)} \
+"
+
+SRC_URI_append_udoovn = " \
     ${@base_conditional("ENABLE_CAN_BUS", "1", "file://0001-Enable-FlexCAN-interfaces-for-UDOO-Neo.patch", "", d)} \
     ${@base_conditional("ENABLE_SPI_BUS", "1", "file://0020-udooneo-enable-ecspi2.patch", "", d)} \
 "

@@ -93,6 +93,9 @@ IMAGE_INSTALL_append = "\
     ttf-dejavu-serif-condensed \
     ttf-dejavu-common \
 "
+
+IMAGE_INSTALL_append = " hello-mod wificonnect vim"
+
 #add compiler for udooneo
 IMAGE_INSTALL_append = " autoconf automake binutils binutils-symlinks cpp cpp-symlinks gcc gcc-symlinks g++ g++-symlinks gettext make libstdc++ libstdc++-dev file coreutils"
 

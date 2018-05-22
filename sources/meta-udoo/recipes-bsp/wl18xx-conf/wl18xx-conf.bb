@@ -12,7 +12,7 @@ SRC_URI = "git://git.ti.com/wilink8-wlan/18xx-ti-utils.git \
            file://wl18xx-conf.bin \
 "
 
-COMPATIBLE_MACHINE = "(udooneo)"
+COMPATIBLE_MACHINE = "(udooneo|udoovn)"
 
 RDEPENDS_${PN} = "crda "
 

@@ -8,7 +8,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 # This recipe provides the latest firmware files for wl18xx.
 # Therefore, use the contents of this recipe instead of the contents
 PR = "r0+gitr${SRCREV}"
-COMPATIBLE_MACHINE = "udooneo"
+COMPATIBLE_MACHINE = "udooneo|udoovn"
 
 SRCREV = "781e59b1b1bec213f82ce7c94e55d30914cf5601"
 SRC_URI = "git://git.ti.com/ti-bt/service-packs.git \

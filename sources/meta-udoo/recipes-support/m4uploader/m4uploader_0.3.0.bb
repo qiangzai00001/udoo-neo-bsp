@@ -25,4 +25,4 @@ do_install_append() {
 
 
 RDEPENDS_${PN} += "bash"
-COMPATIBLE_MACHINE = "(udooneo)"
+COMPATIBLE_MACHINE = "(udooneo|udoovn)"

@@ -31,4 +31,4 @@ do_install() {
 
 RDEPENDS_${PN} += "m4uploader"
 
-COMPATIBLE_MACHINE = "(udooneo)"
+COMPATIBLE_MACHINE = "(udooneo|udoovn)"

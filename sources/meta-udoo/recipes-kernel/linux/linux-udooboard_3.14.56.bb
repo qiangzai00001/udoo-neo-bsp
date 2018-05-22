@@ -10,4 +10,4 @@ SRCREV = "77702fa515d1276bc0a1e7b62e326937f8451f37"
 # backports subdir in the kernel source
 B = "${S}"
 
-COMPATIBLE_MACHINE = "(udooneo|udooqdl|secosbca62)"
+COMPATIBLE_MACHINE = "(udooneo|udoovn|udooqdl|secosbca62)"

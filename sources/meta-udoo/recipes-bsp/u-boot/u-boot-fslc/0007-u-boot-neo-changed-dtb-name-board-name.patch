@@ -1,0 +1,29 @@
+diff -rupN a/board/udoo/neo/neo.c b/board/udoo/neo/neo.c
+--- a/board/udoo/neo/neo.c	2018-04-02 19:25:39.817817205 +0700
++++ b/board/udoo/neo/neo.c	2018-04-02 19:30:40.139959306 +0700
+@@ -990,7 +990,7 @@ int checkboard(void)
+ 		puts("Board: UDOO Neo Extended\n");
+ 	}
+ 	if (board_variant == UDOO_NEO_TYPE_FULL) {
+-		puts("Board: UDOO Neo Full\n");
++		puts("Board: UDOO VN\n");
+ 	}
+ 
+ 	return 0;
+@@ -1096,12 +1096,14 @@ int do_udooinit(cmd_tbl_t *cmdtp, int fl
+ 
+ 	char fdt_file[100];
+ 	char* customdtb = getenv("use_custom_dtb");
+-	sprintf(fdt_file, "/boot/%s%s%s.dtb", modelfdt, video_part, m4_part);
++	/* sprintf(fdt_file, "/boot/%s%s%s.dtb", modelfdt, video_part, m4_part); */
++	sprintf(fdt_file, "/boot/udoovn.dtb");
+ 	if (customdtb) {
+ 		customdtb = trim(customdtb);
+ 		if (strcmp(customdtb, "true") == 0 || strcmp(customdtb, "yes") == 0 || strcmp(customdtb, "enabled") == 0) {
+ 			char* dir_part = "dts-overlay";
+-			sprintf(fdt_file, "/boot/%s/%s%s%s.dtb", dir_part, modelfdt, video_part, m4_part);
++			/* sprintf(fdt_file, "/boot/%s/%s%s%s.dtb", dir_part, modelfdt, video_part, m4_part); */
++			sprintf(fdt_file, "/boot/%s/udoovn.dtb", dir_part);
+ 		}
+ 	}
+ 
