@@ -15,10 +15,6 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
 * Build the Qt5 image
 
     $ bitbake udoo-image-qt5
-
-    To build for another imamge, example
-
-    $ bitbake udoo-image-full-cmdline
     
 * Burning the image to the SD-Card
 
@@ -29,7 +25,7 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
     $ umount /dev/sd<disk>?
     $ bzcat build/tmp/deploy/images/udooneo/udoo-image-qt5-udooneo.wic.bz2 | sudo dd of=/dev/<disk> bs=32M
 
-* Cross compile a Qt5 SDK to use in QtCreator
+* Cross compile a Qt5 SDK to use in QtCreator (no need to do this step)
 
     The recommended way to build a fully featured toolchain for your image is to use the populate_sdk target for building a toolchain installer
 
