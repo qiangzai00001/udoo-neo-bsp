@@ -4,15 +4,18 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
 ===========================================================
 
 * Required Packages for the Host Development System
+======
 
     $ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
      build-essential chrpath socat libsdl1.2-dev xterm
                         
 * Download source yocto BSP
+======
 
     $ git clone https://gitlab.com/embedded-yocto/udoo-neo-bsp.git -b morty
     
 * Prepare the build environment
+======
 
     To form a warm and cosy build environment you have to decide which board to start with.
 
@@ -21,10 +24,12 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
     $ MACHINE=udooneo DISTRO=fslc-framebuffer source setup-environment build
 
 * Build the Qt5 image
+======
 
     $ bitbake udoo-image-qt5
     
 * Burning the image to the SD-Card
+======
 
     Please double check the device of your SD-Card. This can corrupt your installation
 
