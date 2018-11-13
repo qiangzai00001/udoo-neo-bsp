@@ -2,9 +2,9 @@ Yocto BSP for the UDOO i.mx6 UDOO NEO boards
 ===========================================================
 HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
 ===========================================================
-```
+
 * Required Packages for the Host Development System
-```
+
     $ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
      build-essential chrpath socat libsdl1.2-dev xterm
                         
