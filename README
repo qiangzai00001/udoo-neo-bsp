@@ -31,7 +31,7 @@ HOMEPAGE: http://hethongnhung.com , http://laptrinhnhung.com
     I do the following on my Linux box
 
     $ umount /dev/sd<disk>?
-    $ bzcat build/tmp/deploy/images/udooneo/udoo-image-qt5-udooneo.wic.bz2 | sudo dd of=/dev/<disk> bs=32M
+    $ bzcat build/tmp/deploy/images/udoovn/udoo-image-qt5-udoovn.wic.bz2 | sudo dd of=/dev/<disk> bs=32M
 
 * Cross compile a Qt5 SDK to use in QtCreator (no need to do this step)
 
